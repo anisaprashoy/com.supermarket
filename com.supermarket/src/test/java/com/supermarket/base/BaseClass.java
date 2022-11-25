@@ -12,6 +12,7 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 
 import com.relevantcodes.extentreports.model.ITest;
 import com.supermarket.constants.Constants;
@@ -54,23 +55,31 @@ public class BaseClass {
 		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(WaitUtility.PAGE_LOAD_WAIT));
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(WaitUtility.IMPLICIT_WAIT));
 	}
-
-	@BeforeMethod
+	
+	@BeforeMethod(enabled=false)
 	public void setUp() {
 		String browser=prop.getProperty("browser");
 		String url=prop.getProperty("url");
-		initialize(browser,url);
-		
+		initialize(browser,url);	
 	}
+	
+	@Parameters("browser")
+	@BeforeMethod(enabled=true)
+	public void set_Up(String browser) {
+		String url=prop.getProperty("url");
+		initialize(browser,url);
+	}
+	
 	@AfterMethod
 	public void tear_Down(ITestResult itestresult)
 	{
-		driver.close();
+		
 		if(itestresult.getStatus()==itestresult.FAILURE)
 		{
 			//sreenshot.take_Screenshot(driver,itestresult.getName());
 		}
-		
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(WaitUtility.IMPLICIT_WAIT));
+		driver.close();
 	}
 	
 }

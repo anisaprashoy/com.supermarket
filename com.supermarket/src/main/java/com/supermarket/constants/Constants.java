@@ -7,7 +7,8 @@ public class Constants
 	//**LoginPage**//
 	public static final String EXPECTED_REMEMBERME_MESSAGE="Remember Me";
 	public static final String SCREENSHOT_FILEPATH=System.getProperty("user.dir")+"/ScreenShots/";
-	
+	public static final String IMAGE_PATH=System.getProperty("user.dir")+"/src/main/resources/Images/noodles.jpeg/";
+	public static final String EXTENTREPORT_PATH=System.getProperty("user.dir")+"/ExtentReport";
 	// **AdminUsersPage** //
 	public static final String EXPECTED_USERTYPE="Staff";
 }
