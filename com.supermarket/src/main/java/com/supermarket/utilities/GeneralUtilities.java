@@ -35,9 +35,8 @@ public class GeneralUtilities {
 		for (WebElement elementObj : element) {
 			text.add(elementObj.getText());
 		}
-		return text;
-	}
-
+		return text;		
+	}	
 	public String get_AttributeValue(WebElement element, String attributeName) {
 		return element.getAttribute(attributeName);
 	}
@@ -58,7 +57,7 @@ public class GeneralUtilities {
 		return element.isSelected();
 	}
 
-	public void clearTextField(WebElement element) {
+	public void clear_TextField(WebElement element) {
 		element.clear();
 	}
 

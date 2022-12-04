@@ -1,13 +1,18 @@
 package com.supermarket.pages;
 
 import java.io.FileInputStream;
+import java.time.Duration;
 import java.util.Properties;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.supermarket.constants.Constants;
 import com.supermarket.utilities.GeneralUtilities;
@@ -21,10 +26,11 @@ public class LoginPage {
 	GeneralUtilities generalutility;
 	PageUtility pageutility;
 	WaitUtility waitutility;
-
+	
+	@CacheLookup
 	@FindBy(xpath = "//input[contains(@name,'username')]")
 	private WebElement userNameElement;
-
+	@CacheLookup
 	@FindBy(xpath = "//input[contains(@name,'password')]")
 	private WebElement passwordElement;
 
@@ -57,29 +63,34 @@ public class LoginPage {
 	public void enterUserName(String userName) {
 		userNameElement.sendKeys(userName);
 	}
+
 	public void enterPassword(String password) {
 		passwordElement.sendKeys(password);
 	}
+
 	public void clickOnSubmitButton() {
 		signinButtonElement.click();
 	}
+
 	public void login(String userName, String password) {
 		enterUserName(userName);
 		enterPassword(password);
 		clickOnSubmitButton();
 	}
+	
+
 	public void login() {
 		String userName = prop.getProperty("userName");
 		String password = prop.getProperty("password");
 		login(userName, password);
 	}
-	// checking username on the profile after login
+
+	
 	public String get_LoginUsersName() {
 		generalutility = new GeneralUtilities(driver);
 		return generalutility.get_TextOfElement(profileElement);
 	}
 
-	// Login page as per specification
 	public String get_UserNameAttributeOfLogin(String attributeName) {
 		generalutility = new GeneralUtilities(driver);
 		return generalutility.get_AttributeValue(userNameElement, attributeName);
@@ -100,15 +111,12 @@ public class LoginPage {
 		return generalutility.get_TextOfElement(rememberMeElement);
 	}
 
-	// is remember me checkbox selected
 	public void clickOn_RememberMeCheckBox() {
 		pageutility = new PageUtility(driver);
 		pageutility.click_UsingJavascriptExecuter(rememberMeElement);
-
 	}
 
 	public boolean Is_RememberMeCheckBoxSelected() {
-
 		generalutility = new GeneralUtilities(driver);
 		return generalutility.is_Selected(rememberMeCheckBoxElement);
 	}
@@ -120,9 +128,8 @@ public class LoginPage {
 
 	public boolean is_InvalidAlertMessageDisplayed(String expectedText) {
 		generalutility = new GeneralUtilities(driver);
-		waitutility=new WaitUtility(driver);
-		waitutility.wait_ForVisibility(10,"//div[@class='alert alert-danger alert-dismissible']");
+		waitutility = new WaitUtility(driver);
+		waitutility.wait_ForVisibility(10, "//div[@class='alert alert-danger alert-dismissible']");
 		return generalutility.is_ExpectedTextPresent(alertMessage, expectedText);
 	}
-
 }

@@ -28,13 +28,9 @@ public class WaitUtility
 		wait=new WebDriverWait(driver,Duration.ofSeconds(second));
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
 	}
-	public void wait_ForVisibility(long second,String xpath)
-	{
-		wait=new WebDriverWait(driver,Duration.ofSeconds(second));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
-	}
 	
-	public void wait_ForVisibility1(long second,String xpath)
+	
+	public void wait_ForVisibility(long second,String xpath)
 	{
 		wait=new WebDriverWait(driver,Duration.ofSeconds(second));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
@@ -53,15 +49,10 @@ public class WaitUtility
 	}
 	public void fluent_Wait(long timeout,long polling,String path)
 	{
-		wait = (WebDriverWait) new FluentWait(driver)
+		Wait  wait = (WebDriverWait) new FluentWait(driver)
 				 .withTimeout(Duration.ofSeconds(timeout))
 				   .pollingEvery(Duration.ofSeconds(polling))
 				  .ignoring(Exception.class);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(path)));
-	}
-	
-	
-	
-}//visibility
-//invisible
-//wait until popup alert
+	}	
+}

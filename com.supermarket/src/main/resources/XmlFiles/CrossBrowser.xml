@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="crossbrowserTesting" thread-count="4" parallel="tests">
 	<listeners>
-		<listener class-name="com.supermarket.listeners.ExtentReporter" />
+		<listener class-name="com.supermarket.listeners.ExtentReporter"></listener>
 	</listeners>
 	
 	<test name="browserChrome">

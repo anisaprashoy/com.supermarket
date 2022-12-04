@@ -56,7 +56,7 @@ public class BaseClass {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(WaitUtility.IMPLICIT_WAIT));
 	}
 	
-	@BeforeMethod(enabled=false)
+	@BeforeMethod(enabled=true,alwaysRun=true)
 	public void setUp() {
 		String browser=prop.getProperty("browser");
 		String url=prop.getProperty("url");
@@ -64,22 +64,23 @@ public class BaseClass {
 	}
 	
 	@Parameters("browser")
-	@BeforeMethod(enabled=true)
+	@BeforeMethod(enabled=false)
 	public void set_Up(String browser) {
 		String url=prop.getProperty("url");
 		initialize(browser,url);
 	}
 	
-	@AfterMethod
+	@AfterMethod(alwaysRun=true)
 	public void tear_Down(ITestResult itestresult)
 	{
 		
 		if(itestresult.getStatus()==itestresult.FAILURE)
 		{
-			//sreenshot.take_Screenshot(driver,itestresult.getName());
+			sreenshot.take_Screenshot(driver,itestresult.getName());
 		}
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(WaitUtility.IMPLICIT_WAIT));
 		driver.close();
 	}
 	
 }
+ 

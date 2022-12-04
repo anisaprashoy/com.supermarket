@@ -3,6 +3,7 @@ package com.supermarket.pages;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,7 +40,9 @@ public class PushNotificationsPage {
 	
 	@FindBy(xpath="//input[@placeholder='Enter Description']")
 	private WebElement pushNotificationDescriptionElement;
-
+	
+	@FindBy(xpath="//button[@class='btn btn-block-sm btn-info']")
+	private WebElement pushNotificatio_Send_Element;
 
 	
 	public PushNotificationsPage(WebDriver driver) {
@@ -76,14 +79,53 @@ public class PushNotificationsPage {
 	{
 		pushNotificationLinkElement.click();
 	}
-	public void pushnotificationTitleAndDiscription(String title,String description)
+	public String text_OfPushNotificationPage()
+	{
+		WebElement textElement=driver.findElement(By.xpath("//h3[contains(text(),'Push Notifications Informations')]"));
+		generalutility=new GeneralUtilities(driver);
+		return generalutility.get_TextOfElement(textElement);	
+	}
+	public String find_TextOfPushNotificationPage()
+	{
+		login();
+		click_OnPushNotificationLink();
+		return text_OfPushNotificationPage();	
+	}
+	public boolean sendButton_IsClickable()
+	{
+		login();
+		click_OnPushNotificationLink();
+		generalutility=new GeneralUtilities(driver);
+		return generalutility.is_Enabled(pushNotificatio_Send_Element);
+	}
+	
+	public void enter_TitleAndDiscription(String title,String description)
 	{
 		waitutility=new WaitUtility(driver);	
-		waitutility.wait_ForVisibility1(10,"//i[contains(@class,'nav-icon fas fa-fas fa-bell')]");
-		//waitutility.fluent_Wait(20, 5,"//i[contains(@class,'nav-icon fas fa-fas fa-bell')]");
-		
+		waitutility.wait_ForVisibility(10,"//i[contains(@class,'nav-icon fas fa-fas fa-bell')]");
 		pushNotificationTitleElement.sendKeys(title);
 		pushNotificationDescriptionElement.sendKeys(description);
 	}
+	public String alert_MessageAfterSendingNotification()
+	{
+		WebElement alert=driver.findElement(By.xpath("//div[@class='alert alert-success alert-dismissible']"));
+		generalutility=new GeneralUtilities(driver);
+		return generalutility.get_TextOfElement(alert);		
+	}
+	public void click_OnSendButton()
+	{
+	pushNotificatio_Send_Element.click();
+	}
+	
+	public String send_notification(String title,String description)
+	{
+		login();
+		click_OnPushNotificationLink();
+		enter_TitleAndDiscription(title,description);
+		click_OnSendButton();
+		return alert_MessageAfterSendingNotification();
+		
+	}
+	
 	
 }
